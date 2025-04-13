@@ -148,4 +148,4 @@ We welcome contributions to FairLLM! Please see our [contribution guidelines](CO
 For any issues or questions related to FairLLM, please open an issue in the [GitHub repository](https://github.com/INFORMSJoC/2024.0645).
 
 ## Support
-For support in using this software, submit an [issue](https://github.com/INFORMSJoC/2024.0645/issues/new).
+For support regarding the implementation or application of the methods in this repository, please submit an [issue](https://github.com/INFORMSJoC/2024.0645/issues/new) via the GitHub Issue Tracker.
