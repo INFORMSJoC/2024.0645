@@ -27,7 +27,40 @@ BibTeX entry:
 }
 ```
 
-
+## Project Structure
+```
+FairLLM/
+├── configs/              # Configuration files for experiments
+│   ├── base_config.yaml  # Base configuration settings
+│   ├── experiment_configs/ # Experiment-specific configurations
+│   └── model_configs/    # Model-specific parameter settings
+│   └── training_configs/ # training parameter settings
+├── data/                 # Dataset storage
+│   ├── bias_datasets/    # Datasets related to bias
+│   └── synthetic_data/   # Tools for generating synthetic data
+├── docs/                 # Project documentation
+│   ├── API_REFERENCE.md  # API documentation
+│   ├── ARCHITECTURE.md   # System architecture overview
+│   └── FAIRNESS_PROTOCOL.md # Fairness protocol guidelines
+├── requirements/         # Project dependencies and environment setup
+│   ├── docker/           # Docker-related files
+│   │   └── k8s/          # Kubernetes configurations
+│   └── requirements-dev.txt # Development environment dependencies
+├── results/              # Experiment results and analysis
+│   ├── analyzer.py       # Result analysis tools
+│   └── experiment_controller.py # Experiment management tools
+├── scripts/              # Various scripts for project tasks
+│   ├── evaluation_pipeline.py # Evaluation pipeline script
+│   ├── model_service.sh  # Script for deploying model services
+│   └── train_selfbmil.sh # Script for training with Self-BMIL
+└── src/                  # Source code
+    ├── agents/           # Agent modules for different strategies
+    ├── data/             # Data processing utilities
+    ├── evaluation/       # Evaluation metrics and tools
+    ├── models/           # Model definitions and architectures
+    ├── training/         # Model training definitions
+    └── utils/            # General-purpose utilities
+```
 
 ## Installation
 
