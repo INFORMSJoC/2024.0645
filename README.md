@@ -25,7 +25,7 @@ BibTeX entry:
 }
 ```
 
-### Project Structure
+## Project Structure
 ```
 FairLLM/
 ├── configs/              # Configuration files for experiments
@@ -58,15 +58,15 @@ FairLLM/
     └── utils/            # General-purpose utilities
 ```
 
-### Installation
+## Installation
 
-##### Prerequisites
+### Prerequisites
    - Python 3.8 or later
    - Docker
    - Kubernetes (with kubectl)
    - Transformers library by Hugging Face
    
-##### Using Docker
+### Using Docker
 To build and run the FairLLM service using Docker:
 1. Build the Docker image:
    ```bash
@@ -78,7 +78,7 @@ To build and run the FairLLM service using Docker:
    ```bash
    docker ps
    curl http://localhost:8080/health
-##### Using Kubernetes
+### Using Kubernetes
 To deploy FairLLM to a Kubernetes cluster:
 1. Build and tag the Docker image:
    ```bash
@@ -92,7 +92,7 @@ To deploy FairLLM to a Kubernetes cluster:
    ```bash
    kubectl get pods
    kubectl get services
-##### Using Prometheus for Monitoring
+### Using Prometheus for Monitoring
 To monitor FairLLM using Prometheus:
 1. Deploy Prometheus:
    ```bash
@@ -105,8 +105,8 @@ To monitor FairLLM using Prometheus:
    - Access the Prometheus dashboard at *http://localhost:9090*
    - Query metrics like *fairllm_bias_score*, *fairllm_inference_latency_seconds*, etc.
 
-### Usage
-##### Training
+## Usage
+### Training
 To train the FairLLM model using the Self-BMIL strategy:
    ```bash
    bash scripts/train_selfbmil.sh --config configs/training_configs/rlhf_selfbmil_train.yaml
@@ -115,18 +115,18 @@ To train using the Coop-BMIL strategy:
    ```bash
    bash scripts/train_coopbmil.sh --config configs/training_configs/adversarial_coopmil.yaml
    ```
-##### Evaluation
+### Evaluation
 To evaluate the model's performance and fairness metrics:
    ```bash
    python scripts/evaluation_pipeline.py --config configs/experiment_configs/exp_bias_mitigation.yaml
    ```
-##### Deployment
+### Deployment
 To deploy the model as a service:
    ```bash
    bash scripts/model_service.sh --model_path /path/to/your/model --config_path configs/model_configs/llama3_8b_bmil.yaml
    ```
 
-### Results
+## Results
 
 The project includes results from various experiments demonstrating the effectiveness of the proposed bias mitigation strategies. Key results include:
 
@@ -139,8 +139,9 @@ The project includes results from various experiments demonstrating the effectiv
 - **Figure 3:** Impact of Diﬀerent BMIL Methods on Fairness Metric.
   ![results/impact-diff-bmil.png](results/impact-diff-bmil.png)
 
-### Contributing
+## Contributing
 We welcome contributions to FairLLM! Please see our [contribution guidelines](contribution_guidelines) for details on how to contribute.
 
-### Support
+## Support
 For any issues or questions related to FairLLM, please open an issue in the [GitHub repository](https://github.com/INFORMSJoC/2024.0645).
+
