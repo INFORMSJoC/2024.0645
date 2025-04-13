@@ -1,0 +1,45 @@
+# requirements/requirements-dev.txt
+### 核心框架
+torch==2.3.0+cu121
+--extra-index-url https://download.pytorch.org/whl/cu121
+transformers==4.40.0
+accelerate==0.30.0
+
+### 分布式训练
+deepspeed==0.14.0
+fairscale==0.4.13
+horovod==0.28.1
+
+### 数据处理
+numpy==1.26.4
+pandas==2.2.2
+polars==0.20.27
+dask[complete]==2024.4.0
+
+### 可观察性
+prometheus-client==0.20.0
+opentelemetry-sdk==1.24.0
+jaeger-client==4.8.0
+
+### 安全审计
+bandit==1.7.7
+safety==2.4.1
+cryptography==42.0.5
+
+### 开发工具
+pytest==8.1.1
+pytest-xdist==3.5.0
+mypy==1.9.0
+black==24.4.0
+isort==5.13.2
+pre-commit==3.7.0
+
+### 文档生成
+sphinx==7.3.7
+sphinx-rtd-theme==2.0.0
+myst-parser==2.0.0
+
+### 容器构建
+docker==7.0.0
+kubernetes==29.0.0
+

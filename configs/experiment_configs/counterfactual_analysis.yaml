@@ -1,0 +1,18 @@
+# configs/experiment_configs/counterfactual_analysis.yaml 
+_base_: ../model_configs/qwen2_7b_empathy.yaml
+
+counterfactual:
+  generation:
+    methods:
+      - "textfooler"
+      - "checklist"
+    perturbation_levels: [0.1, 0.3, 0.5]
+  evaluation:
+    robustness_metrics:
+      - "semantic_similarity"
+      - "grammaticality"
+      - "label_consistency"
+    fairness_impact:
+      measurement: "counterfactual_fairness"
+      threshold: 0.8
+

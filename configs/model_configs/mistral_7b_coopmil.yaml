@@ -1,0 +1,48 @@
+# configs/model_configs/mistral_7b_coopmil.yaml 
+_base_: ../base_config.yaml
+
+model:
+  architecture:
+    name: "Mistral-CoopBMIL"
+    base_model: "mistralai/Mistral-7B-Instruct-v0.2"
+    hidden_size: 4096
+    num_key_value_heads: 8
+    num_hidden_layers: 32
+    sliding_window: 8192
+    attention_mechanism: 
+      <<: *id001
+      local_blocks: 32
+      sparse_block_size: 128
+    adapters:
+      debate_enhancer:
+        type: "IA3"
+        feedforward_modules: ["down_proj"]
+        target_modules: ["k_proj", "v_proj"]
+
+training_parameters:
+  batch_size: 12
+  learning_rate: 2e-5
+  lr_scheduler:
+    name: "linear_with_warmup"
+    warmup_steps: 300
+  optimizer:
+    type: "Adafactor"
+    scale_parameter: False
+    relative_step: False
+
+debate_config:
+  participant_models: ["gpt-3.5-turbo", "llama2-7B-instruct", "qwen2-7B-instruct"]
+  consensus_threshold: 0.88
+  diversity_penalty_curve:
+    - step: 0
+      value: 0.15
+    - step: 100
+      value: 0.25
+    - step: 500
+      value: 0.35
+  rebuttal_generation:
+    max_length: 1024
+    top_p: 0.92
+    repetition_penalty: 1.2
+    contrastive_search: True
+

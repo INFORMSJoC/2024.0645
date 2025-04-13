@@ -1,0 +1,31 @@
+# configs/model_configs/llama2_7b_multimodal.yaml
+_base_: ../base_config.yaml
+
+model:
+  architecture:
+    name: "Llama2-MM-BMIL"
+    base_model: "meta-llama/Llama-2-7b-chat-hf"
+    modality_fusion:
+      text_projection: "gated"
+      image_encoder: "clip-vit-large-patch14"
+      audio_encoder: "wav2vec2-large"
+    cross_attention:
+      heads: 16
+      dropout: 0.1
+      gating_mechanism: "sigmoid"
+
+multimodal_training:
+  contrastive_learning:
+    temperature: 0.07
+    queue_size: 65536
+    momentum: 0.995
+  alignment_loss:
+    type: "sliced_wasserstein"
+    num_projections: 64
+    regularization: 0.1
+
+bias_mitigation:
+  multimodal_debias:
+    vision_attention_mask: [0.3, 0.6, 0.1]
+    audio_text_alignment_threshold: 0.85
+    crossmodal_suppression_layers: [6, 12, 18]

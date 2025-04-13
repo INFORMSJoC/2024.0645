@@ -1,0 +1,32 @@
+# configs/experiment_configs/ablation_study.yaml
+_base_: ../model_configs/mistral_7b_coopmil.yaml
+
+experiment:
+  name: "ablation_coop_components"
+  phase: "component_analysis"
+  ablation_groups:
+    - components: ["debate_agent"]
+      mode: "remove"
+    - components: ["empathy_module"]
+      mode: "disable"
+    - components: ["attention_modulation"]
+      mode: "reset_weights"
+
+training:
+  epochs: 5
+  batch_size: 6
+  lr: 2e-5
+  ablation_mode: "sequential"
+
+analysis:
+  sensitivity_analysis:
+    parameters: ["consensus_threshold", "diversity_penalty"]
+    ranges:
+      consensus_threshold: [0.7, 0.8, 0.85, 0.9]
+      diversity_penalty: [0.1, 0.2, 0.3]
+  delta_analysis:
+    reference_experiment: "main_exp_bias_mitigation"
+    metric_deltas:
+      fairness_metric: 0.15
+      accuracy: -0.05
+

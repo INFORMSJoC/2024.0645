@@ -1,0 +1,33 @@
+# requirements/docker/k8s/security
+
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: fairllm-authz
+spec:
+  selector:
+    matchLabels:
+      app: fairllm-service
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/fairllm-system/sa/fairllm-service-account"]
+    to:
+    - operation:
+        methods: ["POST"]
+        paths: ["/api/v1/predict"]
+  - from:
+    - source:
+        requestPrincipals: ["*"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/health", "/metrics"]
+  - from:
+    - source:
+        ipBlocks: ["192.168.0.0/16"]
+    to:
+    - operation:
+        methods: ["GET", "POST"]
+        paths: ["/admin/*"]

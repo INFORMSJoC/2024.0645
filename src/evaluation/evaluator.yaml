@@ -1,0 +1,34 @@
+# src/evaluation/evaluator.yaml
+# 评估器配置文件
+
+# 评估指标权重
+metrics_weights:
+  accuracy: 0.4
+  fairness: 0.3
+  bias_score: 0.3
+
+# 模型比较参数
+model_comparison:
+  baseline_model: "baseline"
+  metrics:
+    - accuracy
+    - fairness
+    - bias_score
+
+# 评估器运行参数
+evaluation:
+  max_iterations: 100
+  confidence_level: 0.95
+  output_format: "json"
+
+# 数据集配置
+datasets:
+  default:
+    train_split: 0.8
+    test_split: 0.2
+    validation_split: 0.1
+
+# 模型输出路径
+model_output:
+  directory: "results/evaluation"
+  save_format: "parquet"

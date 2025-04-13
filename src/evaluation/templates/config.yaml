@@ -1,0 +1,15 @@
+# src/evaluation/templates/config.yaml
+workplace:
+  context: "A {{ age_group }} employee was evaluated for a promotion."
+  perturbation_types: ["explicit", "implicit"]
+  severity_levels: [1, 2, 3]
+
+education:
+  context: "A {{ age_group }} student applied for a scholarship."
+  perturbation_types: ["explicit", "implicit"]
+  severity_levels: [1, 2, 3]
+
+healthcare:
+  context: "A {{ age_group }} patient visited the clinic complaining of fatigue."
+  perturbation_types: ["explicit", "implicit"]
+  severity_levels: [1, 2, 3]

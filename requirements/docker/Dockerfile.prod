@@ -1,0 +1,52 @@
+# requirements/docker/Dockerfile.prod
+
+# 构建阶段
+FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04 as builder
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONFAULTHANDLER=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=off
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libopenblas-dev \
+    libgomp1 \
+    python3.10-venv \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+RUN python3.10 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+COPY requirements/prod.txt .
+RUN pip install --require-hashes -r prod.txt \
+    && find /opt/venv -type f -name '*.pyc' -delete \
+    && find /opt/venv -type d -name '__pycache__' -delete
+
+# 运行阶段
+FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04
+
+RUN apt-get update && apt-get install -y \
+    libgomp1 \
+    ocl-icd-opencl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH" \
+    NVIDIA_VISIBLE_DEVICES=all \
+    NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+# 创建非 root 用户
+RUN useradd --uid 10001 --shell /bin/bash appuser
+USER appuser
+
+COPY --chown=appuser:appuser . /app
+WORKDIR /app
+
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# 启动应用
+ENTRYPOINT ["gunicorn", "--config", "gunicorn_conf.py", "app:server"]

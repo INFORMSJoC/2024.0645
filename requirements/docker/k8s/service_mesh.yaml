@@ -1,0 +1,22 @@
+# requirements/docker/k8s/service_mesh.yaml
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: fairllm-service-mesh
+spec:
+  hosts:
+  - fairllm-service
+  http:
+  - match:
+    - uri:
+        prefix: /api/v1/predict
+    route:
+    - destination:
+        host: fairllm-service
+        port:
+          number: 8080
+    fault:
+      delay:
+        percent: 5
+        fixedDelay: 5s

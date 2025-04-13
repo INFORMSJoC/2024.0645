@@ -1,0 +1,88 @@
+# requirements/docker/k8s/deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fairllm-service
+  labels:
+    app.kubernetes.io/part-of: fairllm
+    ai.safety-tier: 3
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 15%
+  selector:
+    matchLabels:
+      app: fairllm-service
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9102"
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: fairllm-service
+        version: v1.2.0
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        fsGroup: 10001
+      containers:
+      - name: main
+        image: registry.internal/fairllm-service:sha-${GIT_SHA}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: fairllm-config
+        - secretRef:
+            name: fairllm-secrets
+        resources:
+          requests:
+            memory: "8Gi"
+            cpu: "2"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "16Gi"
+            cpu: "4"
+            nvidia.com/gpu: 1
+        volumeMounts:
+        - name: model-storage
+          mountPath: /app/models
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10
+      volumes:
+      - name: model-storage
+        persistentVolumeClaim:
+          claimName: fairllm-pvc
+      nodeSelector:
+        accelerator: nvidia-tesla-a100
+      tolerations:
+      - key: "nvidia.com/gpu"
+        operator: "Exists"
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: accelerator
+                operator: In
+                values: ["nvidia-tesla-a100"]
