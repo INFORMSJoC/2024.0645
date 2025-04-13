@@ -67,6 +67,19 @@ FairLLM/
    - Docker
    - Kubernetes (with kubectl)
    - Transformers library by Hugging Face
+
+
+- **Hardware Requirements**:
+  - NVIDIA A100 GPUs with at least 40GB of VRAM.
+  - Multi-node GPU cluster with high-speed interconnects (recommended).
+  - Minimum of 128GB RAM per node (recommended).
+- **Software Requirements**:
+  - Python 3.8 or later
+  - Specific configurations of Docker (24.0.0+) and Kubernetes (with kubectl, 1.28+).
+  - CUDA toolkit version 12.1.1.
+  - Proprietary optimized versions of PyTorch.
+  - Transformers library by Hugging Face
+
    
 ### Using Docker
 To build and run the FairLLM service using Docker:
