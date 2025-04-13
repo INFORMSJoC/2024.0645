@@ -5,7 +5,9 @@
 This repository accompanies the paper [Mitigating Age-Related Bias in Large Language Models: Strategies for Responsible AI Development](https://doi.org/10.1287/ijoc.2024.0645) published in the INFORMS Journal on Computing. It provides the code and data used in the research to demonstrate strategies for reducing age-related bias in large language models (LLMs).
 
 ## Overview
-FairLLM is an open-source project aimed at promoting responsible AI development by addressing age-related bias in LLMs. The project introduces innovative strategies such as Self-BMIL (Self-Bias Mitigation in-the-loop) and Coop-BMIL (Cooperative Bias Mitigation in-the-loop), along with an Empathetic Perspective Exchange strategy to enhance model fairness and inclusivity.
+FairLLM is a project aimed at reducing age-related bias in large language models (LLMs). As LLMs continue to be widely applied across various domains, ensuring their fairness and inclusivity has become crucial. FairLLM introduces two innovative bias mitigation strategies: Self-BMIL (Self-Bias Mitigation in-the-loop) and Coop-BMIL (Cooperative Bias Mitigation in-the-loop), along with an Empathetic Perspective Exchange strategy. These approaches reduce bias in model outputs through self-reflection, collaborative debate, and perspective transformation, thereby enhancing the fairness and inclusivity of the models.
+![FairLLM Framework](figure/frame.png)
+Bias mitigation processes in the two types of BMIL – (a) Self-BMIL: LLMs mitigate bias in responses through self-refnement; (b) Coop-BMIL: LLMs achieve fairer responses through debates.
 
 ## Citing This Work
 If you use this repository or the associated paper in your work, please cite both using their respective DOIs:
