@@ -147,3 +147,5 @@ We welcome contributions to FairLLM! Please see our [contribution guidelines](CO
 ## Support
 For any issues or questions related to FairLLM, please open an issue in the [GitHub repository](https://github.com/INFORMSJoC/2024.0645).
 
+## Contact and Collaboration
+For questions, feedback, or collaboration opportunities, please reach out to [us](liuzhuang@dufe.edu.cn). We are eager to connect with researchers and practitioners interested in studying and mitigating age-related biases.
