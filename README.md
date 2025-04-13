@@ -142,7 +142,7 @@ The project includes results from various experiments demonstrating the effectiv
   ![results/impact-diff-bmil.png](results/impact-diff-bmil.png)
 
 ## Contributing
-We welcome contributions to FairLLM! Please see our [contribution guidelines](contribution_guidelines) for details on how to contribute.
+We welcome contributions to FairLLM! Please see our [contribution guidelines](CONTRIBUTING.md) for details on how to contribute.
 
 ## Support
 For any issues or questions related to FairLLM, please open an issue in the [GitHub repository](https://github.com/INFORMSJoC/2024.0645).
