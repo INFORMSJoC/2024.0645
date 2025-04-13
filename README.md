@@ -73,7 +73,7 @@ FairLLM/
   - CUDA toolkit version 12.1.1.
   - Proprietary optimized versions of PyTorch.
   - Transformers library by Hugging Face
-   
+
 ### Using Docker
 To build and run the FairLLM service using Docker:
 1. Build the Docker image:
