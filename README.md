@@ -4,28 +4,32 @@
 
 This repository accompanies the paper [Mitigating Age-Related Bias in Large Language Models: Strategies for Responsible AI Development](https://doi.org/10.1287/ijoc.2024.0645) published in the INFORMS Journal on Computing. It provides the code and data used in the research to demonstrate strategies for reducing age-related bias in large language models (LLMs).
 
+## Cite
+
+To cite the contents of this repository, please cite both the paper and this repo, using their respective DOIs.
+
+https://doi.org/10.1287/ijoc.2024.0645
+
+https://doi.org/10.1287/ijoc.2024.0645cd
+
+Below is the BibTex for citing this snapshot of the repository.
+
+```
+@misc{@misc{liu2024ijocCode,,
+  author =        {Liu, Zhuang and Qian, Shiyao and Ying, Xinyu and Shi, Tianyu},
+  publisher =     {INFORMS Journal on Computing},
+  title =         {{Mitigating Age-Related Bias in Large Language Models: Strategies for Responsible AI Development}},
+  year =          {2025},
+  doi =           {10.1287/ijoc.2024.0645.cd},
+  url =           {https://github.com/INFORMSJoC/2024.0645},
+  note =          {Available for download at https://github.com/INFORMSJoC/2024.0645},
+}  
+```
+
 ## Overview
 FairLLM is a project aimed at reducing age-related bias in large language models (LLMs). As LLMs continue to be widely applied across various domains, ensuring their fairness and inclusivity has become crucial. FairLLM introduces two innovative bias mitigation strategies: Self-BMIL (Self-Bias Mitigation in-the-loop) and Coop-BMIL (Cooperative Bias Mitigation in-the-loop), along with an Empathetic Perspective Exchange strategy. These approaches reduce bias in model outputs through self-reflection, collaborative debate, and perspective transformation, thereby enhancing the fairness and inclusivity of the models.
 
 ![FairLLM Framework](results/BMIL.png)
-
-## Citing This Work
-If you use this repository or the associated paper in your work, please cite both using their respective DOIs:
-
-- Paper: https://doi.org/10.1287/ijoc.2024.0645
-- Repository: https://doi.org/10.1287/ijoc.2024.0645.cd
-
-BibTeX entry:
-```bibtex
-@article{liu2024mitigating,
-  title={Mitigating Age-Related Bias in Large Language Models: Strategies for Responsible AI Development},
-  author={Liu, Zhuang and Qian, Shiyao and Ying, Xinyu and Shi, Tianyu},
-  journal={INFORMS Journal on Computing},
-  year={2024},
-  publisher={INFORMS},
-  doi={10.1287/ijoc.2024.0645}
-}
-```
 
 ## Project Structure
 ```
