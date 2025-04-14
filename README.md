@@ -16,7 +16,7 @@ Below is the BibTex for citing this snapshot of the repository.
 
 ```
 @misc{@misc{liu2024ijocCode,,
-  author =        {Liu, Zhuang and Qian, Shiyao and Ying, Xinyu and Shi, Tianyu},
+  author =        {Zhuang Liu, Shiyao Qian, Shuirong Cao, Tianyu Shi},
   publisher =     {INFORMS Journal on Computing},
   title =         {{Mitigating Age-Related Bias in Large Language Models: Strategies for Responsible AI Development}},
   year =          {2025},
