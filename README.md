@@ -2,7 +2,12 @@
 
 # FairLLM: Mitigating Age-Related Bias in Large Language Models
 
-This repository accompanies the paper [Mitigating Age-Related Bias in Large Language Models: Strategies for Responsible AI Development](https://doi.org/10.1287/ijoc.2024.0645) published in the INFORMS Journal on Computing. It provides the code and data used in the research to demonstrate strategies for reducing age-related bias in large language models (LLMs).
+This archive is distributed in association with the [INFORMS Journal on
+Computing](https://pubsonline.informs.org/journal/ijoc) under the [MIT License](LICENSE).
+
+The software and data in this repository are a snapshot of the software and data
+that were used in the research reported on in the paper 
+[Mitigating Age-Related Bias in Large Language Models: Strategies for Responsible AI Development](https://doi.org/10.1287/ijoc.2024.0645) by Zhuang Liu, Shiyao Qian, Shuirong Cao, and Tianyu Shi.
 
 ## Cite
 
@@ -10,7 +15,7 @@ To cite the contents of this repository, please cite both the paper and this rep
 
 https://doi.org/10.1287/ijoc.2024.0645
 
-https://doi.org/10.1287/ijoc.2024.0645cd
+https://doi.org/10.1287/ijoc.2024.0645.cd
 
 Below is the BibTex for citing this snapshot of the repository.
 
