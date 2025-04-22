@@ -1,0 +1,53 @@
+# configs/experiment_configs/main_exp_bias_mitigation.yaml
+_base_: 
+  - ../model_configs/llama3_8b_bmil.yaml
+  - ../compliance/safety_compliance.yaml
+
+experiment:
+  name: "main_age_bias_mitigation"
+  phase: "full_training"
+  tags: ["baseline", "controlled"]
+
+training:
+  stages:
+    - name: "warmup"
+      epochs: 2
+      lr: 1e-6
+      batch_size: 4
+      trainable_components: ["adapters"]
+    
+    - name: "main_training"
+      epochs: 8
+      lr: 3e-5
+      batch_size: 8
+      trainable_components: ["full_model"]
+      regularization:
+        l2_lambda: 0.01
+        dropout_rate: 0.15
+
+    - name: "fine_tuning"
+      epochs: 4
+      lr: 1e-6
+      batch_size: 12
+      freeze_layers: [0, 1, 2, 31]
+
+evaluation:
+  metrics:
+    primary: "fairness_metric"
+    secondary: ["accuracy", "bias_score"]
+  dataset_splits:
+    train: 70%
+    validation: 15%
+    test: 15%
+  cross_validation:
+    folds: 5
+    stratified: True
+
+analysis:
+  statistical_tests:
+    - test: "mannwhitneyu"
+      alpha: 0.05
+      correction: "bonferroni"
+    - test: "cohens_d"
+      effect_size_threshold: 0.8
+

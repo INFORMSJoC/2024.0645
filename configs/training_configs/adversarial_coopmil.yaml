@@ -1,0 +1,51 @@
+# configs/training_configs/adversarial_coopmil.yaml
+_base_: 
+  - ../model_configs/mistral_7b_coopmil.yaml
+  - ../compliance/safety_compliance.yaml
+
+training:
+  adversarial_config:
+    attack_type: "PGD"
+    epsilon: 0.03
+    step_size: 0.004
+    num_steps: 7
+    norm: "linf"
+    random_start: True
+    attack_frequency: 3
+
+    generator_network:
+      layers: [512, 256]
+      activation: "gelu"
+      spectral_norm: True
+      dropout: 0.1
+
+    discriminator_network:
+      layers: [768, 384]
+      attention_heads: 12
+      residual_connections: True
+
+  cooperative_learning:
+    debate_schedule:
+      init_frequency: 100
+      growth_rate: 1.2
+    knowledge_distillation:
+      temperature: 0.7
+      alpha: 0.3
+      beta: 0.7
+    gradient_aggregation:
+      method: "signsgd"
+      compression: "topk-0.3"
+
+  dynamic_curriculum:
+    difficulty_metric: "bias_score"
+    stages:
+      - threshold: 0.5
+        batch_composition:
+          synthetic_data: 30%
+          augmented_data: 50%
+          original_data: 20%
+      - threshold: 0.3
+        batch_composition:
+          synthetic_data: 10%
+          augmented_data: 30%
+          original_data: 60%

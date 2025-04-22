@@ -1,0 +1,70 @@
+# configs/model_configs/llama3_8b_bmil.yaml
+_base_: ../base_config.yaml
+
+model:
+  architecture:
+    name: "Llama3-SelfBMIL"
+    base_model: "meta-llama/Meta-Llama-3-8B-Instruct"
+    hidden_size: 4096
+    num_attention_heads: 32
+    num_hidden_layers: 32
+    rope_theta: 500000.0
+    attention_mechanism: &id001
+      name: "HybridAttention"
+      flash_attention: True
+      sliding_window: 256
+      local_blocks: 16
+      sparse_block_size: 64
+    adapters:
+      bias_mitigation:
+        type: "LoRA"
+        rank: 64
+        alpha: 32
+        target_modules: ["q_proj", "v_proj"]
+
+training_parameters:
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 3e-5
+  lr_scheduler:
+    name: "cosine_with_warmup"
+    warmup_steps: 200
+    num_cycles: 0.5
+  max_seq_length: 4096
+  mixed_precision: "bf16"
+  optimizer:
+    type: "Lion"
+    beta1: 0.95
+    beta2: 0.98
+    weight_decay: 0.01
+    use_triton: True
+
+distributed_training:
+  strategy: "deepspeed_stage3"
+  activation_checkpointing: True
+  offload_optimizer: True
+  zero_config:
+    stage: 3
+    offload_param:
+      device: "nvme"
+      nvme_path: "/local_nvme"
+
+quantization:
+  quant_method: "gptq"
+  bits: 4
+  group_size: 128
+  desc_act: False
+
+bias_mitigation:
+  self_reflection:
+    max_retries: 3
+    reflection_depth: 2
+    temperature_schedule:
+      initial: 0.7
+      final: 0.3
+      decay_steps: 1000
+  attention_modulation:
+    suppression_layers: [8, 16, 24]
+    suppression_factor: 0.4
+    enhancement_layers: [4, 12, 20]
+    enhancement_factor: 1.6

@@ -1,0 +1,41 @@
+# configs/base_config.yaml
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  experiment_tracking:
+    enabled: True
+    system: "wandb"
+    project: "fairllm"
+    tags: ["bias_mitigation", "llm"]
+
+paths:
+  data_dir: "/data/fairllm"
+  model_cache: "/models/huggingface"
+  experiment_output: "/results/{exp_id}"
+
+resources:
+  default_gpu_memory: "24GB"
+  cpu_cores: 16
+  shared_memory: "32GB"
+
+training:
+  seed: 42
+  max_epochs: 10
+  early_stopping:
+    patience: 3
+    metric: "validation_loss"
+    mode: "min"
+
+evaluation:
+  metrics:
+    - "accuracy"
+    - "fairness_index"
+    - "bias_score"
+  test_split: 0.2
+  cross_validation_folds: 5
+
+version_control:
+  model_snapshots: True
+  snapshot_interval: 1000
+  git_integration: True
+

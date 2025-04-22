@@ -1,0 +1,32 @@
+# configs/experiment_configs/hyperparam_search.yaml
+_base_: ../base_config.yaml
+
+hyperparameters:
+  search_space:
+    learning_rate:
+      type: "log_uniform"
+      min: 1e-6
+      max: 1e-4
+    batch_size:
+      type: "choice"
+      values: [4, 8, 16]
+    optimizer:
+      type: "categorical"
+      values: ["adamw", "lion", "adafactor"]
+  
+  search_algorithm:
+    name: "bayesian"
+    parameters:
+      num_iterations: 50
+      init_points: 10
+      acquisition_function: "EI"
+  
+  resource_allocation:
+    max_parallel_jobs: 8
+    gpu_per_trial: 1
+    timeout_hours: 12
+
+logging:
+  mlflow:
+    tracking_uri: "http://mlflow-server:5000"
+    experiment_name: "fairllm_hyperparam"

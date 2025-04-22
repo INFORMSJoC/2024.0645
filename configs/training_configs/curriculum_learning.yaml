@@ -1,0 +1,44 @@
+# configs/training_configs/curriculum_learning.yaml
+_base_: ../model_configs/qwen2_7b_empathy.yaml
+
+curriculum:
+  difficulty_measure: "bias_density"
+  progression_type: "exponential"
+  stages:
+    - level: 1
+      data_mix:
+        easy: 70%
+        medium: 20%
+        hard: 10%
+      max_seq_length: 512
+      lr_multiplier: 0.8
+    
+    - level: 2
+      data_mix:
+        easy: 40%
+        medium: 40%
+        hard: 20%
+      max_seq_length: 1024
+      lr_multiplier: 1.0
+    
+    - level: 3
+      data_mix:
+        easy: 10%
+        medium: 30%
+        hard: 60%
+      max_seq_length: 2048
+      lr_multiplier: 1.2
+
+  difficulty_metrics:
+    easy_threshold: 0.3
+    hard_threshold: 0.7
+    metric_weights:
+      lexical_complexity: 0.4
+      context_ambiguity: 0.3
+      social_bias_potential: 0.3
+
+  transition_condition:
+    validation_metric: "fairness_improvement"
+    threshold: 0.15
+    patience: 3
+

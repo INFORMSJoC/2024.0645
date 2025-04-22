@@ -1,0 +1,49 @@
+# configs/training_configs/rlhf_selfbmil_train.yaml
+_base_: ../model_configs/llama3_8b_bmil.yaml
+
+training:
+  method: "RLHF-PPO"
+  stages:
+    - phase: "pretrain"
+      steps: 5000
+      reward_model: "berkeley-nlp/reward-bias-mitigation"
+      kl_coeff: 0.15
+      entropy_coeff: 0.02
+      advantage_estimation: "GAE"
+      gamma: 0.99
+      lambda: 0.95
+    
+    - phase: "self_refinement"
+      steps: 10000
+      reflection_depth: 3
+      temperature_schedule:
+        type: "cosine"
+        base: 0.7
+        final: 0.2
+      adaptive_kl:
+        target: 0.6
+        horizon: 2000
+
+  optimizer:
+    type: "Lion"
+    learning_rate: 1.5e-5
+    beta1: 0.95
+    beta2: 0.98
+    grad_clip: 1.0
+    weight_decay: 0.01
+
+  reward_shaping:
+    fairness_coeff: 1.2
+    accuracy_coeff: 0.9
+    diversity_bonus:
+      threshold: 0.8
+      scaling: "logarithmic"
+    penalty_terms:
+      repetition: 0.3
+      contradiction: 0.5
+
+  reflection_memory:
+    buffer_size: 10000
+    priority_sampling: True
+    alpha: 0.6
+    beta: 0.4

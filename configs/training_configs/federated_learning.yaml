@@ -1,0 +1,39 @@
+# configs/training_configs/federated_learning.yaml
+_base_: 
+  - ../model_configs/gemini_coopmil.yaml
+  - ../optimization/hardware_optimization.yaml
+
+federated:
+  aggregation_method: "FedProx"
+  mu: 0.01
+  client_selection:
+    strategy: "adaptive"
+    criteria: ["data_volume", "compute_capability"]
+    weighting: "quadratic"
+
+  differential_privacy:
+    enabled: True
+    noise_scale: 0.8
+    clipping_threshold: 1.2
+    accountant: "moments"
+
+  client_config:
+    local_epochs: 3
+    batch_size: 4
+    local_optimizer:
+      type: "SGD"
+      lr: 0.01
+      momentum: 0.9
+
+  communication:
+    compression:
+      method: "sparsification"
+      ratio: 0.3
+      error_feedback: True
+    encryption:
+      protocol: "homomorphic"
+      key_size: 2048
+    bandwidth_aware:
+      throttling_threshold: 80%
+      adaptive_interval: True
+

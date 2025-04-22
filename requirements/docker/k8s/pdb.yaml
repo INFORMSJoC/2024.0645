@@ -1,0 +1,11 @@
+# requirements/docker/k8s/pdb.yaml
+
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: fairllm-pdb
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: fairllm-service

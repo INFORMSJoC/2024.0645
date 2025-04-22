@@ -1,0 +1,46 @@
+# configs/compliance/safety_compliance.yaml
+compliance:
+  data_protection:
+    gdpr:
+      anonymization:
+        enabled: True
+        method: "differential_privacy"
+        epsilon: 0.8
+        delta: 1e-5
+      retention_policy:
+        max_duration_days: 90
+        auto_purge: True
+
+  ethical_ai:
+    fairness:
+      audit_schedule:
+        interval_seconds: 86400
+        metrics: ["demographic_parity", "equalized_odds"]
+        thresholds:
+          demographic_parity: 0.85
+          equalized_odds: 0.78
+    transparency:
+      explanation_depth: 3
+      feature_importance: True
+      
+  content_safety:
+    realtime_filters:
+      categories:
+        - violence:
+            severity: "HIGH"
+            action: "block"
+        - hate_speech:
+            severity: "MEDIUM"
+            action: "redact"
+        - self_harm:
+            severity: "CRITICAL"
+            action: "block_and_alert"
+    logging:
+      incident_log_path: "/logs/safety_incidents"
+      anonymize_logs: True
+
+  model_governance:
+    version_audit_trail: True
+    access_control:
+      role_based: True
+      approval_workflow: True

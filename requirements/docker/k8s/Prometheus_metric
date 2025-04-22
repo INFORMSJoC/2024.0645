@@ -1,0 +1,46 @@
+# requirements/docker/k8s/Prometheus_metric
+
+# Prometheus自定义指标
+from prometheus_client import Gauge, Histogram
+
+# 偏见分数
+fairllm_bias_score = Gauge(
+    'fairllm_bias_score', 
+    'Multidimensional bias metrics', 
+    ['dimension', 'model', 'environment']
+)
+
+# 推理延迟
+fairllm_inference_latency = Histogram(
+    'fairllm_inference_latency_seconds',
+    'Inference latency distribution',
+    buckets=(0.1, 0.3, 0.5, 1.0, 2.0, 5.0)
+)
+
+# GPU 使用率
+fairllm_gpu_util = Gauge(
+    'fairllm_gpu_utilization_percent',
+    'GPU utilization percentage',
+    ['gpu_id', 'model', 'environment']
+)
+
+# 内存使用率
+fairllm_memory_util = Gauge(
+    'fairllm_memory_utilization_percent',
+    'Memory utilization percentage',
+    ['environment']
+)
+
+# CPU 使用率
+fairllm_cpu_util = Gauge(
+    'fairllm_cpu_utilization_percent',
+    'CPU utilization percentage',
+    ['environment']
+)
+
+# 模型加载时间
+fairllm_model_load_time = Histogram(
+    'fairllm_model_load_time_seconds',
+    'Model loading time distribution',
+    buckets=(10, 30, 60, 120, 300)
+)

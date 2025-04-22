@@ -1,0 +1,36 @@
+# configs/model_configs/gemini_coopmil.yaml
+_base_: ../base_config.yaml
+
+model:
+  architecture:
+    name: "Gemini-CoopBMIL-Pro"
+    api_endpoint: "gemini1.0-pro-001"
+    safety_settings:
+      harassment: "BLOCK_ONLY_HIGH"
+      hate_speech: "BLOCK_MEDIUM_AND_ABOVE"
+    generation_config:
+      candidate_count: 3
+      temperature: 0.4
+      top_p: 0.95
+      max_output_tokens: 2048
+
+debate_config:
+  participant_models: ["gemini1.0-pro-001", "llama3-8B-instruct", "gpt-3.5-turbo"]
+  dynamic_weight_adjustment:
+    initial_weights: [0.85, 0.95, 0.9]
+    adjustment_rate: 0.02
+    max_adjustment: 0.15
+  evidence_integration:
+    similarity_threshold: 0.78
+    temporal_decay: 0.9
+
+api_optimization:
+  request_batching:
+    max_batch_size: 8
+    timeout_ms: 1500
+  fallback_strategy:
+    consecutive_failures: 3
+    fallback_model: "gpt-3.5-turbo-16k"
+  rate_limit:
+    requests_per_minute: 150
+    token_bucket_size: 50000

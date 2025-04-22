@@ -1,0 +1,48 @@
+# configs/model_configs/qwen2_7b_empathy.yaml
+_base_: ../base_config.yaml
+
+model:
+  architecture:
+    name: "Qwen2-EmpathyPro"
+    base_model: "Qwen/Qwen1.5-7B-Chat"
+    hidden_size: 4096
+    num_attention_heads: 32
+    rotary_emb:
+      base: 10000
+      scaling_factor: 0.25
+      max_position_embeddings: 32768
+    attention_mechanism:
+      <<: *id001
+      use_longlora: True
+      shift_factor: 4
+
+empathy_engine:
+  age_group_mapping:
+    young_adult:
+      age_range: [18, 30]
+      lexical_mapping:
+        "experienced": "early-career"
+        "senior": "junior"
+    senior:
+      age_range: [56, 100]
+      lexical_mapping:
+        "junior": "seasoned"
+        "new graduate": "professional"
+  emotion_adaptation:
+    sentiment_thresholds:
+      positive: 0.6
+      negative: -0.5
+    adjustment_factors:
+      young_adult: 0.15
+      senior: -0.1
+  context_awareness:
+    depth: 3
+    dependency_parsing: True
+    coreference_resolution: True
+
+quantization:
+  quant_method: "awq"
+  bits: 3
+  group_size: 64
+  zero_point: True
+

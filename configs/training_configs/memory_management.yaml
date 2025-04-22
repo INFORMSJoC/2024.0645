@@ -1,0 +1,31 @@
+# configs/training_configs/memory_management.yaml
+_base_: 
+  - ../model_configs/mistral_7b_coopmil.yaml
+  - ../optimization/hardware_optimization.yaml
+
+memory:
+  hierarchy:
+    - level: "HBM"
+      capacity: "40GB"
+      policy: "frequent_updates"
+    - level: "DDR"
+      capacity: "256GB"
+      policy: "checkpoint_states"
+    - level: "NVMe"
+      capacity: "2TB"
+      policy: "archival_storage"
+
+  attention_memory:
+    key_value_cache:
+      compression: "int8"
+      group_size: 64
+      quant_method: "rtn"
+    flash_attention: "v2"
+    sliding_window: 8192
+
+  checkpoint_strategy:
+    mode: "delta"
+    interval: 500
+    retention: 3
+    compression: "zstd"
+

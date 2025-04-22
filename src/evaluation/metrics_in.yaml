@@ -1,0 +1,30 @@
+# src/evaluation/metrics.yaml
+# eval内使用的公平性指标配置文件
+
+# 基尼系数权重
+gini_coefficient:
+  weight: 0.7
+  threshold: 0.3
+
+# JS散度权重
+js_divergence:
+  weight: 0.3
+  threshold: 0.2
+
+# 蒙特卡洛重采样参数
+bootstrap:
+  n_bootstrap: 1000
+  alpha: 0.05
+
+# 反事实公平性评估参数
+counterfactual_fairness:
+  percentile: 95
+  threshold: 2.0
+
+# 模型比较参数
+model_comparison:
+  baseline_model: "baseline"
+  metrics:
+    - accuracy
+    - fairness
+    - bias_score

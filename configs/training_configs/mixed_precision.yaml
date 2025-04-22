@@ -1,0 +1,28 @@
+# configs/training_configs/mixed_precision.yaml
+_base_: ../model_configs/llama2_7b_multimodal.yaml
+
+precision:
+  activation: "bf16"
+  weight: "fp8"
+  gradient: "fp32"
+  master_weights: True
+
+  scaling:
+    loss_scale: "dynamic"
+    initial_scale: 32768
+    growth_factor: 2.0
+    backoff_factor: 0.5
+    hysteresis: 2
+
+  tensor_cores:
+    enabled: True
+    matmul_precision: "high"
+    convolution_format: "NHWC"
+
+  memory_optimization:
+    activation_checkpointing:
+      strategy: "smart"
+      exclude_layers: [0, 31]
+    buffer_preallocation: 0.9
+    fragmented_memory_ratio: 0.05
+

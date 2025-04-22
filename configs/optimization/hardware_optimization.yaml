@@ -1,0 +1,57 @@
+# configs/optimization/hardware_optimization.yaml
+hardware:
+  compute_optimization:
+    cuda:
+      version: "12.1"
+      architectures: ["sm_89", "sm_90"]
+      kernel_tuning:
+        enabled: True
+        search_space:
+          - tile_size: [32, 64, 128]
+          - num_warps: [4, 8]
+          - num_stages: [2, 3]
+    
+    memory_management:
+      hierarchical:
+        gpu_memory:
+          allocation_strategy: "dynamic_buddy"
+          max_fragmentation: 0.15
+        host_memory:
+          pinned_buffers: True
+          numa_aware: True
+      nvme_offload:
+        enabled: True
+        path: "/nvme_swap"
+        pcie:
+          generation: 4
+          lanes: 16
+        bandwidth_allocation: 
+          read: 0.6
+          write: 0.4
+
+  kernel_optimization:
+    fused_operators:
+      attention: 
+        enabled: True
+        flash_attention_variant: "v2.3.8"
+      mlp:
+        enabled: True
+        activation_fusion: ["GeLU", "SiLU"]
+    graph_optimization:
+      level: 3
+      passes:
+        - "cudagraphs"
+        - "kernel_fusion"
+        - "memory_coalescing"
+
+  hardware_aware_scheduling:
+    topology_aware:
+      enable_nvlink: True
+      cross_gpu_communication: "nccl"
+    dynamic_parallelism:
+      adaptive_micro_batching: True
+      max_concurrent_streams: 4
+    power_management:
+      tdp_limit: 350
+      boost_mode: "efficient"
+
